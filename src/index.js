@@ -2,7 +2,7 @@ const express = require ('express');
 
 const path = require('path');
 
-const db = require('./database/db');
+const db = require('./database/db'); 
 
 const app = express();
 

@@ -4,10 +4,10 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
-const SECRET = ('clinicaestetica');
+const SECRET = 'clinicaestetica';
 
 exports.loginCliente = (req, res) => {
-    const { login, senha } = req.body;
+    const { email, senha } = req.body;
 
     db.query('SELECT * FROM pessoa WHERE email= ?', email, (err, results) => {
         if (err) {
