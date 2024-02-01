@@ -2,14 +2,16 @@ const express = require ('express');
 
 const path = require('path');
 
+const db = require('./database/db');
+
 const app = express();
 
-// const routes = require('../routes/routes');
+// Configurando as rotas
 const routes = require('./routes/routes');
 
 app.use('/', routes); 
 
-const db = require('./database/db');
+app.use(express.json()); 
 
 app.listen(3333, () => {
     console.log('Servidor funcionando');

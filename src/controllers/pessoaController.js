@@ -16,7 +16,7 @@ const pessoaSchema = ({
     data_nascimento: Joi.string().required(),
     tipo: Joi.string().required(),
     observacao: Joi.string().required(),
-    login: Joi.string().email().required(),
+    email: Joi.string().email().required(),
     senha: Joi.string().min(6).required(),
 }); 
 
@@ -52,9 +52,9 @@ exports.buscarPessoa = (req, res) => {
 
 //Adicionar pessoa 
 exports.adicionarPessoa = (req, res) => {
-    const { nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, login, senha } = req.body; 
+    const { nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, email, senha } = req.body; 
 
-    const { error } = pessoaSchema.validate({ nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, login, senha });
+    const { error } = pessoaSchema.validate({ nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, email, senha });
 
     if (error) {
         res.status(400).json ({ error: 'Dados de pessoa inválidos'});
@@ -68,7 +68,7 @@ exports.adicionarPessoa = (req, res) => {
             return; 
         }
 
-        const novaPessoa = { nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, login, senha: hash };
+        const novaPessoa = { nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, email, senha: hash };
 
         db.query('INSERT INTO pessoa SET ?', novaPessoa, (err, result) => {
             if (err) {
@@ -84,16 +84,16 @@ exports.adicionarPessoa = (req, res) => {
 //Atualizar Pessoa 
 exports.atualizarPessoa = (req, res) => {
     const { id_pessoa } = req.params;
-    const {nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, login } = req.body;
+    const {nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, email } = req.body;
 
-    const { error } = pessoaSchema.validate({nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, login, senha });
+    const { error } = pessoaSchema.validate({nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, email, senha });
     
     if (error) {
         res.status(400).json({ error: 'Dados da pessoa inválidos' });
         return;
     }
     
-    const pessoaAtualizada = {nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, login };
+    const pessoaAtualizada = {nome_pessoa, telefone, endereco, bairro, complemento, cidade, cpf, data_nascimento,tipo, observacao, email};
     
     db.query('UPDATE pessoa SET ? WHERE id_pessoa = ?', [pessoaAtualizada, id_pessoa], (err, result) => {
         if (err) {

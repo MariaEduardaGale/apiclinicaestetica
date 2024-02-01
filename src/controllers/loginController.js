@@ -1,4 +1,4 @@
-const db = require('../database/db');   
+const db = require('./database/db');   
 
 const bcrypt = require('bcrypt');
 
@@ -9,15 +9,15 @@ const SECRET = ('clinicaestetica');
 exports.loginCliente = (req, res) => {
     const { login, senha } = req.body;
 
-    db.query('SELECT * FROM pessoa WHERE login = ?', login, (err, results) => {
+    db.query('SELECT * FROM pessoa WHERE email= ?', email, (err, results) => {
         if (err) {
-            console.error('Erro ao buscar login:', err);
+            console.error('Erro ao buscar email:', err);
             res.status(500).json({ error: 'Erro interno do servidor' });
             return;
         }
 
         if (results.lenght === 0) {
-            res.status(401).json({ error: 'Login não encontrado' });
+            res.status(401).json({ error: 'email não encontrado' });
             return;
         }
 

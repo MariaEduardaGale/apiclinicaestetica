@@ -1,4 +1,3 @@
-const { Module } = require('module');
 const mysql = require('mysql');
 
 const db = mysql.createConnection({
